@@ -90,10 +90,10 @@ address = {street = "1664 N. Virginia Street", city = "Reno", region = "NV", pos
 
 # Geographic coordinates
 # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-coordinates = {latitude = "37.4275", longitude = "-122.1697"}
+coordinates = {latitude = "39.538240", longitude = "-119.812819"}
 
 # Directions for visitors to locate you.
-directions = "Sarah H. Fleischmann Blgd"
+directions = "Sarah H. Fleischmann Blgd, 0100c-7"
 
 # Office hours
 # A list of your office hours. To remove, set to an empty list `[]`.
