@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Markdown |  </title>
+    <link>/tags/r-markdown/</link>
+      <atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <description>R Markdown</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 26 Jan 2020 21:13:14 -0500</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>R Markdown</title>
+      <link>/tags/r-markdown/</link>
+    </image>
+    
+    <item>
+      <title>GLM</title>
+      <link>/post/glm/glm/</link>
+      <pubDate>Sun, 26 Jan 2020 21:13:14 -0500</pubDate>
+      <guid>/post/glm/glm/</guid>
+      <description>
+
+
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;p&gt;Name: Kwame Boamah-Addo&lt;/p&gt;
+&lt;p&gt;Title: Lab 3&lt;/p&gt;
+&lt;p&gt;Date: 11/03/2019&lt;/p&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;In this report, we fit data to different GLM models and assess which model is the best. Also, these models are fitted with multiple explanatory variables and collinearity effect is checked. The best model is then used to construct confidence interval. This report is begins an introduction and a close look at the data is done. Methodology used is discussed before actual analysis done and conclusion drawn.&lt;/p&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;Data&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The data contains the width of female horeseshoe crabs and these are classified into young and old. The number of observations and number having satellites are also given. The crab width is from 23cm to 30cm, the number classified as young is the same as the number classified as old.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;methodology&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;strong&gt;Methodology&lt;/strong&gt;&lt;/h1&gt;
+&lt;div id=&#34;glm&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;GLM&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;In this report, different GLM models are fitted to the data and under this section a discussion of the models fitted is done.&lt;/p&gt;
+&lt;p&gt;The first model fitted is &lt;span class=&#34;math display&#34;&gt;\[ logit(\pi) = \alpha + \beta x\]&lt;/span&gt; where x is a binary variable.&lt;/p&gt;
+&lt;p&gt;The second model fitted is &lt;span class=&#34;math display&#34;&gt;\[logit(\pi) = \alpha + \beta x + \gamma z \]&lt;/span&gt; where x is a binary variable and z is a continous variable. Thus when $x =0 $, the model reduces to &lt;span class=&#34;math display&#34;&gt;\[logit(\pi) = \alpha + \gamma z \]&lt;/span&gt; and when &lt;span class=&#34;math inline&#34;&gt;\(x=1\)&lt;/span&gt; the model reduces to &lt;span class=&#34;math display&#34;&gt;\[logit(\pi) = \alpha + \beta + \gamma z\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The other model fitted is a saturated model : &lt;span class=&#34;math display&#34;&gt;\[ logit(\pi) = \alpha  + \beta x + \gamma z + \omega(x,z) \]&lt;/span&gt;. This model considers interaction between the variables x and z.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;aic&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;AIC&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The best model in this report is chosen by comparing akaike information criterion (AIC). Akaike Information Criterion is an estimator of the relative quality of statistical models for a given set of data. AIC is calculated using the formula,
+&lt;span class=&#34;math display&#34;&gt;\[AIC = 2k - 2 \ln(\hat L)\]&lt;/span&gt; where k is the number of parameters and &lt;span class=&#34;math inline&#34;&gt;\(\hat L\)&lt;/span&gt; is the maximum value of the likelihood function.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;confidence-interval&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;Confidence Interval&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Confidence interval for proportion of crab width will be calculated using
+&lt;span class=&#34;math display&#34;&gt;\[\hat p \pm Z_{\alpha/2} \sqrt{\frac{\hat p (1-\hat p)}{n}}\]&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;strong&gt;Analysis&lt;/strong&gt;&lt;/h1&gt;
+&lt;div id=&#34;question-a&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;Question a&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Based on the models described in methology above, the data is fitted to these models.&lt;/p&gt;
+&lt;div id=&#34;model-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model 1&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;This model assumes the number of satellites depends only on whether the crab was classified as young or old. in this analysis &lt;span class=&#34;math inline&#34;&gt;\(x=1\)&lt;/span&gt; represents young and &lt;span class=&#34;math inline&#34;&gt;\(x=0\)&lt;/span&gt; represents old. Thus, &lt;span class=&#34;math display&#34;&gt;\[ Old: logit(\pi(x)) = \alpha\]&lt;/span&gt; and &lt;span class=&#34;math display&#34;&gt;\[Young: logit(\pi(x,z)) = \alpha + \beta \]&lt;/span&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-2&#34;&gt;Table 1: &lt;/span&gt;Model 1&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1561738&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.000000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageY&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5823958&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2225495&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.616927&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0088725&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model 2&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Under this model, we assume being young or old does not affect the number of satellites a crab has and the only important variable is width of the crab.
+&lt;span class=&#34;math display&#34;&gt;\[logit(\pi(x,z)) = \alpha + \gamma z \]&lt;/span&gt; where z is the width of the crab and a discrete variable.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-3&#34;&gt;Table 2: &lt;/span&gt;Model 2&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-13.4630012&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.8834606&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-7.148013&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5219282&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0716548&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.283928&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-3&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model 3&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;This model assumes that both width and age are important variables in predicting the number of satellites a female crab will have. The model is &lt;span class=&#34;math display&#34;&gt;\[ logit(\pi(x,z)) = \alpha + \beta x + \gamma z\]&lt;/span&gt; where x is the age of the crab and z is the width of the crab.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-4&#34;&gt;Table 3: &lt;/span&gt;Model 3&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-14.3332178&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9543487&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-7.334012&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageY&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7545120&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2510445&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.005491&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0026515&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5405642&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0734593&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.358687&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-4&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model 4&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;The model is a saturated model that considers the joint effects of age and width. This is implemented in such a way that both variables have the same intercept. Mathematically,
+&lt;span class=&#34;math display&#34;&gt;\[logit(\pi(x,z)) = \alpha + \beta_{1} x I_{z=Y} + \beta_{2} x I_{z=O}\]&lt;/span&gt;
+&lt;span class=&#34;math display&#34;&gt;\[Young: logit(\pi(x)) = \alpha + \beta_{1} x \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Old: logit(\pi(x)) = \alpha + \beta_{2} x \]&lt;/span&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-5&#34;&gt;Table 4: &lt;/span&gt;Model 4&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-13.9417728&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9293125&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-7.226291&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageO:width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5261355&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0728158&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.225568&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageY:width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5541885&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0743199&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.456798&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-5&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model 5&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;The last model is a saturated model that considers the joint effects of age and width however the intercept is different for young crabs and the old crabs. The model is:
+&lt;span class=&#34;math display&#34;&gt;\[logit(\pi(x,z)) = \alpha + \beta x + \gamma z + \beta_{1} x I_{z=Y}\]&lt;/span&gt;
+&lt;span class=&#34;math display&#34;&gt;\[ Young: logit(\pi(x)) = (\alpha + \gamma) + (\beta + \beta_{1}) x\]&lt;/span&gt;
+&lt;span class=&#34;math display&#34;&gt;\[Old: logit(\pi(x)) = \alpha + \beta x \]&lt;/span&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-6&#34;&gt;Table 5: &lt;/span&gt;Model 5&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-16.2928870&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.9021817&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-5.6140134&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageY&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.4997782&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.8901840&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1567006&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2473947&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6145295&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1093444&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.6201285&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ageY:width&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.1426740&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1477513&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.9656362&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3342263&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;question-b&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;Question b&lt;/strong&gt;&lt;/h2&gt;
+&lt;div id=&#34;parameter-significance&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Parameter Significance&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;From the tables above, age and width are significant variables. However, with model 5 we see that the interaction variable is not significant and that makes the age(Young) variable also not significant. This is indicative of a collinearity effect and the model may not be the best model.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-quality&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;Model Quality&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Models discussed under question a above are compared using AIC and from the table below it can be seen that the third model is the best model with the least AIC of 64.97.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-7&#34;&gt;Table 6: &lt;/span&gt;AIC Comparison&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;right&#34;&gt;Model1&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model2&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model3&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model4&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model5&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;133.1908&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;72.24877&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;64.97472&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;65.38657&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;66.03623&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The residual deviance is also used to check if the model gives an appropiate fit to the data.From the table of p-values from chi-squared distribution below, the same conclusion made by the AIC that model 3 is the best model that fits the data. Though model4 and model5 also give pretty good fits.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-8&#34;&gt;Table 7: &lt;/span&gt;Data Fit&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;right&#34;&gt;Model1&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model2&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model3&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model4&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Model5&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1004951&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5465425&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5127469&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5433635&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;p&gt;The plots also show that width is an important variable and age has some effect. Thus the third model gives the best fit and adding an interaction variable does not really improve the model.&lt;/p&gt;
+&lt;div id=&#34;model-1-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;strong&gt;Model 1 Plot&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;From the plot below,&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-9&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/glm/glm_files/figure-html/unnamed-chunk-9-1.png&#34; alt=&#34;\label{fig:figs3} Model 1&#34; width=&#34;1152&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1:  Model 1
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-2-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;strong&gt;Model 2 Plot&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-10&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/glm/glm_files/figure-html/unnamed-chunk-10-1.png&#34; alt=&#34;\label{fig:figs3} Model 2&#34; width=&#34;1152&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2:  Model 2
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-3-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;strong&gt;Model 3 Plot&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-11&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/glm/glm_files/figure-html/unnamed-chunk-11-1.png&#34; alt=&#34;\label{fig:figs3} Model 3&#34; width=&#34;1152&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3:  Model 3
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-4-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;strong&gt;Model 4 Plot&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-12&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/glm/glm_files/figure-html/unnamed-chunk-12-1.png&#34; alt=&#34;\label{fig:figs3} Model 4&#34; width=&#34;1152&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4:  Model 4
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&#34;page-break-after: always;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-5-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;strong&gt;Model 5 Plot&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/glm/glm_files/figure-html/unnamed-chunk-13-1.png&#34; alt=&#34;\label{fig:figs3} Model 5&#34; width=&#34;1152&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 5:  Model 5
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;question-c&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;strong&gt;Question c&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The 98% confidence interval for the population proportion of old female crabs of width 28 cm with satellites is given in the table below. This was calculated using the equation discussed in the methodology section.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-14&#34;&gt;Table 8: &lt;/span&gt;98% Confidence Interval&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;LCL&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;UCL&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3103085&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.070743&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;In this report, different models are fitted to a horseshoe crab data set. It was seen that a model involving age and width variables without interaction is the best model using AIC, deviance and plots.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>
+
+
+&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R Markdown&lt;/h1&gt;
+&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &amp;lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Including Plots&lt;/h1&gt;
+&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
+  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
+  init.angle = -50, border = NA
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: A fancy pie chart.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

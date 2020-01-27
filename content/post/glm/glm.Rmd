@@ -1,0 +1,392 @@
+---
+title: "GLM"
+author: "Kwame"
+date: 2020-01-26T21:13:14-05:00
+categories: ["R"]
+tags: ["GLM", "Logistic Regression", "regression"]
+---
+
+\newpage
+Name: Kwame Boamah-Addo
+
+Title: Lab 3
+
+Date: 11/03/2019
+
+\newpage
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	fig.align = "center",
+	fig.height = 10,
+	fig.width = 12,
+	message = FALSE,
+	warning = FALSE,
+	comment = NA,
+	fig.pos="h"
+)
+library("broom")
+```
+
+# **Introduction**
+
+In this report, we fit data to different GLM models and assess which model is the best. Also, these models are fitted with multiple explanatory variables and collinearity effect is checked. The best model is then used to construct confidence interval. This report is begins an introduction and a close look at the data is done. Methodology used is discussed before actual analysis done and conclusion drawn.
+
+## **Data**
+The data contains the width of female horeseshoe crabs and these are classified into young and old. The number of observations and number having satellites are also given. The crab width is from 23cm to 30cm, the number classified as young is the same as the number classified as old.
+
+# **Methodology**
+
+## **GLM**
+
+In this report, different GLM models are fitted to the data and under this section a discussion of the models fitted is done.
+
+The first model fitted is $$ logit(\pi) = \alpha + \beta x$$ where x is a binary variable.
+
+The second model fitted is $$logit(\pi) = \alpha + \beta x + \gamma z $$ where x is a binary variable and z is a continous variable. Thus when $x =0 $, the model reduces to $$logit(\pi) = \alpha + \gamma z $$ and when $x=1$ the model reduces to $$logit(\pi) = \alpha + \beta + \gamma z$$
+
+The other model fitted is a saturated model : $$ logit(\pi) = \alpha  + \beta x + \gamma z + \omega(x,z) $$. This model considers interaction between the variables x and z.
+
+## **AIC**
+The best model in this report is chosen by comparing akaike information criterion (AIC). Akaike Information Criterion is an estimator of the relative quality of statistical models for a given set of data. AIC is calculated using the formula,
+$$AIC = 2k - 2 \ln(\hat L)$$ where k is the number of parameters and $\hat L$ is the maximum value of the likelihood function.
+
+## **Confidence Interval**
+
+Confidence interval for proportion of crab width will be calculated using 
+$$\hat p \pm Z_{\alpha/2} \sqrt{\frac{\hat p (1-\hat p)}{n}}$$
+
+# **Analysis**
+## **Question a**
+
+Based on the models described in methology above, the data is fitted to these models.
+
+```{r}
+width<-rep(23:30,2)
+n <- c(12,15,24,35,25,22,17,14,14,14,28,39,22,24,18,14)
+numsat<-c(1,2,10,11,15,17,14,12,5,4,17,21,15,20,15,14)
+numnosat <- n- numsat
+age<-factor(rep(c("O","Y"),c(8,8)))
+SF<-cbind(numsat,numnotsat=n-numsat)
+
+```
+
+### **Model 1**
+This model assumes the number of satellites depends only on whether the crab was classified as young or old. in this analysis $x=1$ represents young and $x=0$ represents old. Thus, $$ Old: logit(\pi(x)) = \alpha$$ and $$Young: logit(\pi(x,z)) = \alpha + \beta $$
+
+```{r}
+a <- glm(formula = SF~age, family = binomial)
+knitr::kable(tidy(a),caption = "Model 1")
+```
+
+### **Model 2**
+Under this model, we assume being young or old does not affect the number of satellites a crab has and the only important variable is width of the crab.
+$$logit(\pi(x,z)) = \alpha + \gamma z $$ where z is the width of the crab and a discrete variable. 
+
+```{r}
+b <- glm(formula = SF ~ width, family = binomial)
+knitr::kable(tidy(b),caption = "Model 2")
+```
+
+
+
+### **Model 3**
+This model assumes that both width and age are important variables in predicting the number of satellites a female crab will have. The model is $$ logit(\pi(x,z)) = \alpha + \beta x + \gamma z$$ where x is the age of the crab and z is the width of the crab.
+
+```{r}
+c <- glm(formula = SF ~ age + width, family = binomial)
+knitr::kable(tidy(c),caption = "Model 3")
+```
+
+
+
+### **Model 4**
+
+The model is a saturated model that considers the joint effects of age and width. This is implemented in such a way that both variables have the same intercept. Mathematically,
+$$logit(\pi(x,z)) = \alpha + \beta_{1} x I_{z=Y} + \beta_{2} x I_{z=O}$$
+ $$Young: logit(\pi(x)) = \alpha + \beta_{1} x $$
+
+ $$Old: logit(\pi(x)) = \alpha + \beta_{2} x $$
+
+
+```{r}
+d <- glm(formula = SF~age:width, family = binomial)
+knitr::kable(tidy(d),caption = "Model 4")
+```
+
+### **Model 5**
+
+The last model is a saturated model that considers the joint effects of age and width however the intercept is different for young crabs and the old crabs. The model is:
+$$logit(\pi(x,z)) = \alpha + \beta x + \gamma z + \beta_{1} x I_{z=Y}$$
+$$ Young: logit(\pi(x)) = (\alpha + \gamma) + (\beta + \beta_{1}) x$$
+$$Old: logit(\pi(x)) = \alpha + \beta x $$
+```{r}
+e <- glm(formula = SF~age*width, family = binomial)
+knitr::kable(tidy(e),caption = "Model 5")
+```
+
+## **Question b**
+
+### **Parameter Significance**
+
+From the tables above, age and width are significant variables. However, with model 5 we see that the interaction variable is not significant and that makes the age(Young) variable also not significant. This is indicative of a collinearity effect and the model may not be the best model. 
+
+### **Model Quality**
+
+Models discussed under question a above are compared using AIC and from the table below it can be seen that the third model is the best model with the least AIC of 64.97. 
+
+```{r}
+A <- cbind(a$aic,b$aic,c$aic,d$aic,e$aic)
+colnames(A) <- c("Model1","Model2","Model3","Model4","Model5")
+A <- data.frame(A)
+knitr::kable(A,caption = "AIC Comparison")
+
+```
+
+The residual deviance is also used to check if the model gives an appropiate fit to the data.From the table of p-values from chi-squared distribution below, the same conclusion made by the AIC that model 3 is the best model that fits the data. Though model4 and model5 also give pretty good fits.
+
+
+
+```{r}
+m1 <- 1-pchisq(a$deviance,a$df.residual)
+m2 <- 1 - pchisq(b$deviance,b$df.residual)
+m3 <- 1- pchisq(c$deviance,c$df.residual)
+m4 <- 1 - pchisq(d$deviance, d$df.residual)
+m5 <- 1 - pchisq(e$deviance, e$df.residual)
+B <- cbind(m1,m2,m3,m4,m5)
+colnames(B) <- c("Model1","Model2","Model3","Model4","Model5")
+B <- data.frame(B)
+knitr::kable(B,caption = "Data Fit")
+```
+
+\newpage
+
+The plots also show that width is an important variable and age has some effect. Thus the third model gives the best fit and adding an interaction variable does not really improve the model.
+
+#### **Model 1 Plot**
+
+From the plot below, 
+
+```{r fig.cap="\\label{fig:figs3} Model 1"}
+par(mfrow = c(1,2))
+plot(c(23,30),c(0,1),type='n',
+xlab='width',ylab='Proportion of satellites',log='x')
+text(width,numsat[1:8]/n[1:8],labels=as.character(age[1:8]),col='blue')
+text(width,numsat[9:16]/n[9:16],labels=as.character(age[9:16]),col='red')
+
+# Proportion: Prediction plot
+#======================================
+#ld<-seq(23,30,0.1)
+lines(width[1:8],predict(a,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),
+type='response')[1:8],col='blue')
+lines(width[9:16],predict(a,
+data.frame(width[9:16],age=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16],col='red')
+
+# Logit: Data plot
+#======================================
+plot(c(23,30),c(-5,5),type='n',
+xlab='width',ylab='Logit function',log='x')
+text(width,log(numsat[1:8]/n[1:8]/(1-numsat[1:8]/n[1:8])),
+labels=as.character(age[1:8]),col='blue')
+text(width,log(numsat[9:16]/n[1:8]/(1-numsat[9:16]/n[9:16])),
+labels=as.character(age[9:16]),col='red')
+
+# Logit: Prediction plot
+#======================================
+#ld<-seq(0,5,0.1)
+p<-predict(a,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),type='response')[1:8]
+lines(width[1:8],log(p/(1-p)),col='blue')
+p<-predict(a,
+data.frame(width,sex=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16]
+lines(width[9:16],log(p/(1-p)),col='red')
+```
+\newpage
+
+#### **Model 2 Plot**
+
+```{r fig.cap="\\label{fig:figs3} Model 2"}
+par(mfrow = c(1,2))
+plot(c(23,30),c(0,1),type='n',
+xlab='width',ylab='Proportion of satellites',log='x')
+text(width,numsat[1:8]/n[1:8],labels=as.character(age[1:8]),col='blue')
+text(width,numsat[9:16]/n[9:16],labels=as.character(age[9:16]),col='red')
+
+# Proportion: Prediction plot
+#======================================
+#ld<-seq(23,30,0.1)
+lines(width[1:8],predict(b,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),
+type='response')[1:8],col='blue')
+lines(width[9:16],predict(b,
+data.frame(width[9:16],age=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16],col='red')
+
+# Logit: Data plot
+#======================================
+plot(c(23,30),c(-5,5),type='n',
+xlab='width',ylab='Logit function',log='x')
+text(width,log(numsat[1:8]/n[1:8]/(1-numsat[1:8]/n[1:8])),
+labels=as.character(age[1:8]),col='blue')
+text(width,log(numsat[9:16]/n[1:8]/(1-numsat[9:16]/n[9:16])),
+labels=as.character(age[9:16]),col='red')
+
+# Logit: Prediction plot
+#======================================
+#ld<-seq(0,5,0.1)
+p<-predict(b,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),type='response')[1:8]
+lines(width[1:8],log(p/(1-p)),col='blue')
+p<-predict(b,
+data.frame(width,sex=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16]
+lines(width[9:16],log(p/(1-p)),col='red')
+```
+\newpage
+#### **Model 3 Plot**
+
+```{r fig.cap="\\label{fig:figs3} Model 3"}
+par(mfrow = c(1,2))
+plot(c(23,30),c(0,1),type='n',
+xlab='width',ylab='Proportion of satellites',log='x')
+text(width,numsat[1:8]/n[1:8],labels=as.character(age[1:8]),col='blue')
+text(width,numsat[9:16]/n[9:16],labels=as.character(age[9:16]),col='red')
+
+# Proportion: Prediction plot
+#======================================
+#ld<-seq(23,30,0.1)
+lines(width[1:8],predict(c,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),
+type='response')[1:8],col='blue')
+lines(width[9:16],predict(c,
+data.frame(width[9:16],age=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16],col='red')
+
+# Logit: Data plot
+#======================================
+plot(c(23,30),c(-5,5),type='n',
+xlab='width',ylab='Logit function',log='x')
+text(width,log(numsat[1:8]/n[1:8]/(1-numsat[1:8]/n[1:8])),
+labels=as.character(age[1:8]),col='blue')
+text(width,log(numsat[9:16]/n[1:8]/(1-numsat[9:16]/n[9:16])),
+labels=as.character(age[9:16]),col='red')
+
+# Logit: Prediction plot
+#======================================
+#ld<-seq(0,5,0.1)
+p<-predict(c,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),type='response')[1:8]
+lines(width[1:8],log(p/(1-p)),col='blue')
+p<-predict(c,
+data.frame(width,sex=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16]
+lines(width[9:16],log(p/(1-p)),col='red')
+```
+\newpage
+#### **Model 4 Plot**
+
+```{r fig.cap="\\label{fig:figs3} Model 4"}
+par(mfrow = c(1,2))
+plot(c(23,30),c(0,1),type='n',
+xlab='width',ylab='Proportion of satellites',log='x')
+text(width,numsat[1:8]/n[1:8],labels=as.character(age[1:8]),col='blue')
+text(width,numsat[9:16]/n[9:16],labels=as.character(age[9:16]),col='red')
+
+# Proportion: Prediction plot
+#======================================
+#ld<-seq(23,30,0.1)
+lines(width[1:8],predict(d,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),
+type='response')[1:8],col='blue')
+lines(width[9:16],predict(d,
+data.frame(width[9:16],age=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16],col='red')
+
+# Logit: Data plot
+#======================================
+plot(c(23,30),c(-5,5),type='n',
+xlab='width',ylab='Logit function',log='x')
+text(width,log(numsat[1:8]/n[1:8]/(1-numsat[1:8]/n[1:8])),
+labels=as.character(age[1:8]),col='blue')
+text(width,log(numsat[9:16]/n[1:8]/(1-numsat[9:16]/n[9:16])),
+labels=as.character(age[9:16]),col='red')
+
+# Logit: Prediction plot
+#======================================
+#ld<-seq(0,5,0.1)
+p<-predict(d,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),type='response')[1:8]
+lines(width[1:8],log(p/(1-p)),col='blue')
+p<-predict(d,
+data.frame(width,sex=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16]
+lines(width[9:16],log(p/(1-p)),col='red')
+```
+\newpage
+#### **Model 5 Plot**
+
+```{r fig.cap="\\label{fig:figs3} Model 5"}
+par(mfrow = c(1,2))
+plot(c(23,30),c(0,1),type='n',
+xlab='width',ylab='Proportion of satellites',log='x')
+text(width,numsat[1:8]/n[1:8],labels=as.character(age[1:8]),col='blue')
+text(width,numsat[9:16]/n[9:16],labels=as.character(age[9:16]),col='red')
+
+# Proportion: Prediction plot
+#======================================
+#ld<-seq(23,30,0.1)
+lines(width[1:8],predict(e,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),
+type='response')[1:8],col='blue')
+lines(width[9:16],predict(e,
+data.frame(width[9:16],age=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16],col='red')
+
+# Logit: Data plot
+#======================================
+plot(c(23,30),c(-5,5),type='n',
+xlab='width',ylab='Logit function',log='x')
+text(width,log(numsat[1:8]/n[1:8]/(1-numsat[1:8]/n[1:8])),
+labels=as.character(age[1:8]),col='blue')
+text(width,log(numsat[9:16]/n[1:8]/(1-numsat[9:16]/n[9:16])),
+labels=as.character(age[9:16]),col='red')
+
+# Logit: Prediction plot
+#======================================
+#ld<-seq(0,5,0.1)
+p<-predict(e,
+data.frame(width,age=factor(rep("O",length(width)),levels=levels(age))),type='response')[1:8]
+lines(width[1:8],log(p/(1-p)),col='blue')
+p<-predict(e,
+data.frame(width,sex=factor(rep("Y",length(width)),levels=levels(age))),
+type='response')[9:16]
+lines(width[9:16],log(p/(1-p)),col='red')
+```
+
+
+
+## **Question c**
+
+The 98% confidence interval for the population proportion of old female crabs of width 28 cm with satellites is given in the table below. This was calculated using the equation discussed in the methodology section.
+
+```{r}
+x <- predict(c,data.frame(width,age=factor(rep("O",length(width)),
+          levels=levels(age))),type='response')[1:8]
+y <- x[6]
+se_y <- sqrt(y*(1-y)/8)
+LCL <- y - qnorm(0.99,0,1)*se_y
+UCL <- y + qnorm(0.99,0,1)*se_y
+a <- data.frame(LCL,UCL)
+knitr::kable(a,caption = "98% Confidence Interval")
+```
+
+# **Conclusion**
+
+In this report, different models are fitted to a horseshoe crab data set. It was seen that a model involving age and width variables without interaction is the best model using AIC, deviance and plots.
+
+
+

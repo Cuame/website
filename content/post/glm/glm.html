@@ -1,0 +1,376 @@
+---
+title: "GLM"
+author: "Kwame"
+date: 2020-01-26T21:13:14-05:00
+categories: ["R"]
+tags: ["GLM", "Logistic Regression", "regression"]
+---
+
+
+
+<div style="page-break-after: always;"></div>
+<p>Name: Kwame Boamah-Addo</p>
+<p>Title: Lab 3</p>
+<p>Date: 11/03/2019</p>
+<div style="page-break-after: always;"></div>
+<div id="introduction" class="section level1">
+<h1><strong>Introduction</strong></h1>
+<p>In this report, we fit data to different GLM models and assess which model is the best. Also, these models are fitted with multiple explanatory variables and collinearity effect is checked. The best model is then used to construct confidence interval. This report is begins an introduction and a close look at the data is done. Methodology used is discussed before actual analysis done and conclusion drawn.</p>
+<div id="data" class="section level2">
+<h2><strong>Data</strong></h2>
+<p>The data contains the width of female horeseshoe crabs and these are classified into young and old. The number of observations and number having satellites are also given. The crab width is from 23cm to 30cm, the number classified as young is the same as the number classified as old.</p>
+</div>
+</div>
+<div id="methodology" class="section level1">
+<h1><strong>Methodology</strong></h1>
+<div id="glm" class="section level2">
+<h2><strong>GLM</strong></h2>
+<p>In this report, different GLM models are fitted to the data and under this section a discussion of the models fitted is done.</p>
+<p>The first model fitted is <span class="math display">\[ logit(\pi) = \alpha + \beta x\]</span> where x is a binary variable.</p>
+<p>The second model fitted is <span class="math display">\[logit(\pi) = \alpha + \beta x + \gamma z \]</span> where x is a binary variable and z is a continous variable. Thus when $x =0 $, the model reduces to <span class="math display">\[logit(\pi) = \alpha + \gamma z \]</span> and when <span class="math inline">\(x=1\)</span> the model reduces to <span class="math display">\[logit(\pi) = \alpha + \beta + \gamma z\]</span></p>
+<p>The other model fitted is a saturated model : <span class="math display">\[ logit(\pi) = \alpha  + \beta x + \gamma z + \omega(x,z) \]</span>. This model considers interaction between the variables x and z.</p>
+</div>
+<div id="aic" class="section level2">
+<h2><strong>AIC</strong></h2>
+<p>The best model in this report is chosen by comparing akaike information criterion (AIC). Akaike Information Criterion is an estimator of the relative quality of statistical models for a given set of data. AIC is calculated using the formula,
+<span class="math display">\[AIC = 2k - 2 \ln(\hat L)\]</span> where k is the number of parameters and <span class="math inline">\(\hat L\)</span> is the maximum value of the likelihood function.</p>
+</div>
+<div id="confidence-interval" class="section level2">
+<h2><strong>Confidence Interval</strong></h2>
+<p>Confidence interval for proportion of crab width will be calculated using
+<span class="math display">\[\hat p \pm Z_{\alpha/2} \sqrt{\frac{\hat p (1-\hat p)}{n}}\]</span></p>
+</div>
+</div>
+<div id="analysis" class="section level1">
+<h1><strong>Analysis</strong></h1>
+<div id="question-a" class="section level2">
+<h2><strong>Question a</strong></h2>
+<p>Based on the models described in methology above, the data is fitted to these models.</p>
+<div id="model-1" class="section level3">
+<h3><strong>Model 1</strong></h3>
+<p>This model assumes the number of satellites depends only on whether the crab was classified as young or old. in this analysis <span class="math inline">\(x=1\)</span> represents young and <span class="math inline">\(x=0\)</span> represents old. Thus, <span class="math display">\[ Old: logit(\pi(x)) = \alpha\]</span> and <span class="math display">\[Young: logit(\pi(x,z)) = \alpha + \beta \]</span></p>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Model 1</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1561738</td>
+<td align="right">0.000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">ageY</td>
+<td align="right">0.5823958</td>
+<td align="right">0.2225495</td>
+<td align="right">2.616927</td>
+<td align="right">0.0088725</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-2" class="section level3">
+<h3><strong>Model 2</strong></h3>
+<p>Under this model, we assume being young or old does not affect the number of satellites a crab has and the only important variable is width of the crab.
+<span class="math display">\[logit(\pi(x,z)) = \alpha + \gamma z \]</span> where z is the width of the crab and a discrete variable.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 2: </span>Model 2</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-13.4630012</td>
+<td align="right">1.8834606</td>
+<td align="right">-7.148013</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">width</td>
+<td align="right">0.5219282</td>
+<td align="right">0.0716548</td>
+<td align="right">7.283928</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-3" class="section level3">
+<h3><strong>Model 3</strong></h3>
+<p>This model assumes that both width and age are important variables in predicting the number of satellites a female crab will have. The model is <span class="math display">\[ logit(\pi(x,z)) = \alpha + \beta x + \gamma z\]</span> where x is the age of the crab and z is the width of the crab.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 3: </span>Model 3</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-14.3332178</td>
+<td align="right">1.9543487</td>
+<td align="right">-7.334012</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">ageY</td>
+<td align="right">0.7545120</td>
+<td align="right">0.2510445</td>
+<td align="right">3.005491</td>
+<td align="right">0.0026515</td>
+</tr>
+<tr class="odd">
+<td align="left">width</td>
+<td align="right">0.5405642</td>
+<td align="right">0.0734593</td>
+<td align="right">7.358687</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-4" class="section level3">
+<h3><strong>Model 4</strong></h3>
+<p>The model is a saturated model that considers the joint effects of age and width. This is implemented in such a way that both variables have the same intercept. Mathematically,
+<span class="math display">\[logit(\pi(x,z)) = \alpha + \beta_{1} x I_{z=Y} + \beta_{2} x I_{z=O}\]</span>
+<span class="math display">\[Young: logit(\pi(x)) = \alpha + \beta_{1} x \]</span></p>
+<p><span class="math display">\[Old: logit(\pi(x)) = \alpha + \beta_{2} x \]</span></p>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 4: </span>Model 4</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-13.9417728</td>
+<td align="right">1.9293125</td>
+<td align="right">-7.226291</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">ageO:width</td>
+<td align="right">0.5261355</td>
+<td align="right">0.0728158</td>
+<td align="right">7.225568</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">ageY:width</td>
+<td align="right">0.5541885</td>
+<td align="right">0.0743199</td>
+<td align="right">7.456798</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-5" class="section level3">
+<h3><strong>Model 5</strong></h3>
+<p>The last model is a saturated model that considers the joint effects of age and width however the intercept is different for young crabs and the old crabs. The model is:
+<span class="math display">\[logit(\pi(x,z)) = \alpha + \beta x + \gamma z + \beta_{1} x I_{z=Y}\]</span>
+<span class="math display">\[ Young: logit(\pi(x)) = (\alpha + \gamma) + (\beta + \beta_{1}) x\]</span>
+<span class="math display">\[Old: logit(\pi(x)) = \alpha + \beta x \]</span></p>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 5: </span>Model 5</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-16.2928870</td>
+<td align="right">2.9021817</td>
+<td align="right">-5.6140134</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">ageY</td>
+<td align="right">4.4997782</td>
+<td align="right">3.8901840</td>
+<td align="right">1.1567006</td>
+<td align="right">0.2473947</td>
+</tr>
+<tr class="odd">
+<td align="left">width</td>
+<td align="right">0.6145295</td>
+<td align="right">0.1093444</td>
+<td align="right">5.6201285</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">ageY:width</td>
+<td align="right">-0.1426740</td>
+<td align="right">0.1477513</td>
+<td align="right">-0.9656362</td>
+<td align="right">0.3342263</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="question-b" class="section level2">
+<h2><strong>Question b</strong></h2>
+<div id="parameter-significance" class="section level3">
+<h3><strong>Parameter Significance</strong></h3>
+<p>From the tables above, age and width are significant variables. However, with model 5 we see that the interaction variable is not significant and that makes the age(Young) variable also not significant. This is indicative of a collinearity effect and the model may not be the best model.</p>
+</div>
+<div id="model-quality" class="section level3">
+<h3><strong>Model Quality</strong></h3>
+<p>Models discussed under question a above are compared using AIC and from the table below it can be seen that the third model is the best model with the least AIC of 64.97.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-7">Table 6: </span>AIC Comparison</caption>
+<thead>
+<tr class="header">
+<th align="right">Model1</th>
+<th align="right">Model2</th>
+<th align="right">Model3</th>
+<th align="right">Model4</th>
+<th align="right">Model5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">133.1908</td>
+<td align="right">72.24877</td>
+<td align="right">64.97472</td>
+<td align="right">65.38657</td>
+<td align="right">66.03623</td>
+</tr>
+</tbody>
+</table>
+<p>The residual deviance is also used to check if the model gives an appropiate fit to the data.From the table of p-values from chi-squared distribution below, the same conclusion made by the AIC that model 3 is the best model that fits the data. Though model4 and model5 also give pretty good fits.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-8">Table 7: </span>Data Fit</caption>
+<thead>
+<tr class="header">
+<th align="right">Model1</th>
+<th align="right">Model2</th>
+<th align="right">Model3</th>
+<th align="right">Model4</th>
+<th align="right">Model5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">0.1004951</td>
+<td align="right">0.5465425</td>
+<td align="right">0.5127469</td>
+<td align="right">0.5433635</td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<p>The plots also show that width is an important variable and age has some effect. Thus the third model gives the best fit and adding an interaction variable does not really improve the model.</p>
+<div id="model-1-plot" class="section level4">
+<h4><strong>Model 1 Plot</strong></h4>
+<p>From the plot below,</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="/post/glm/glm_files/figure-html/unnamed-chunk-9-1.png" alt="\label{fig:figs3} Model 1" width="1152" />
+<p class="caption">
+Figure 1:  Model 1
+</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="model-2-plot" class="section level4">
+<h4><strong>Model 2 Plot</strong></h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="/post/glm/glm_files/figure-html/unnamed-chunk-10-1.png" alt="\label{fig:figs3} Model 2" width="1152" />
+<p class="caption">
+Figure 2:  Model 2
+</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="model-3-plot" class="section level4">
+<h4><strong>Model 3 Plot</strong></h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="/post/glm/glm_files/figure-html/unnamed-chunk-11-1.png" alt="\label{fig:figs3} Model 3" width="1152" />
+<p class="caption">
+Figure 3:  Model 3
+</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="model-4-plot" class="section level4">
+<h4><strong>Model 4 Plot</strong></h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="/post/glm/glm_files/figure-html/unnamed-chunk-12-1.png" alt="\label{fig:figs3} Model 4" width="1152" />
+<p class="caption">
+Figure 4:  Model 4
+</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="model-5-plot" class="section level4">
+<h4><strong>Model 5 Plot</strong></h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="/post/glm/glm_files/figure-html/unnamed-chunk-13-1.png" alt="\label{fig:figs3} Model 5" width="1152" />
+<p class="caption">
+Figure 5:  Model 5
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="question-c" class="section level2">
+<h2><strong>Question c</strong></h2>
+<p>The 98% confidence interval for the population proportion of old female crabs of width 28 cm with satellites is given in the table below. This was calculated using the equation discussed in the methodology section.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-14">Table 8: </span>98% Confidence Interval</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">LCL</th>
+<th align="right">UCL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>6</td>
+<td align="right">0.3103085</td>
+<td align="right">1.070743</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><strong>Conclusion</strong></h1>
+<p>In this report, different models are fitted to a horseshoe crab data set. It was seen that a model involving age and width variables without interaction is the best model using AIC, deviance and plots.</p>
+</div>
